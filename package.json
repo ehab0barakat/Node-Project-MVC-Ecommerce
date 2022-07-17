@@ -12,5 +12,13 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "��#\u0000 \u0000N\u0000o\u0000d\u0000e\u0000-\u0000P\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehab0barakat/Node-Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ehab0barakat/Node-Project/issues"
+  },
+  "homepage": "https://github.com/ehab0barakat/Node-Project#readme"
 }
