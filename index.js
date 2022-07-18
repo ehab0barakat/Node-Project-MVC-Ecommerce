@@ -33,6 +33,11 @@ app.get('/', (req, res) => {
     // })
     res.render("index");
 });
+app.get('/description', (req, res) => {
+
+	
+    res.render("description");
+});
 
 
 app.listen(4000);
