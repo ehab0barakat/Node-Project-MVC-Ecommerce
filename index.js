@@ -33,6 +33,11 @@ app.get('/', (req, res) => {
     // })
     res.render("index");
 });
+app.get('/description', (req, res) => {
+
+	
+    res.render("description");
+});
 
 app.get('/cart',(req,res)=>{
 
@@ -49,6 +54,18 @@ app.get('/cart',(req,res)=>{
 
 
 app.listen(4000);
+
+app.get('/shop', function(req, res) {
+	let products;
+	connection.query("SELECT * FROM products ", function (err, result, fields) {
+	  if (err) {
+		throw err;
+	  } else {
+		// console.log(result);
+		res.render('products', {title: 'Shop', products: result});
+	  }
+	});
+  });
 
 
 
