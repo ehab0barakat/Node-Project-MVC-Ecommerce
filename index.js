@@ -34,6 +34,19 @@ app.get('/', (req, res) => {
     res.render("index");
 });
 
+app.get('/cart',(req,res)=>{
+
+	// connection.query('SELECT * FROM products', (err, rows)=>{
+	// 	if(!err)
+	// 	 res.send(rows);
+	// 	else
+	// 	 console.log(err);
+	//    })
+
+
+	res.render("cart");
+});
+
 
 app.listen(4000);
 
