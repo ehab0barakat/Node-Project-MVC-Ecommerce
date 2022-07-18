@@ -24,7 +24,27 @@ connection.connect(function(error){
 });
 
 app.set('view engine', 'ejs');
+
+app.get('/description', (req, res) => {
+
+	
+    res.render("description");
+});
+
+
 app.listen(4000);
+
+app.get('/shop', function(req, res) {
+	let products;
+	connection.query("SELECT * FROM products ", function (err, result, fields) {
+	  if (err) {
+		throw err;
+	  } else {
+		// console.log(result);
+		res.render('products', {title: 'Shop', products: result});
+	  }
+	});
+  });
 
 
 // -------------------- ( login && register started ) -----------------------
