@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 const express = require("express")
 
+=======
+
+const express= require("express")
+>>>>>>> 6cf2fb8a7942b84865487d2bba9813f9bef9a95c
 var app = express();
 var mysql = require('mysql');
 const cors = require('cors');
@@ -30,6 +35,20 @@ connection.connect(function (error) {
 app.listen(4000);
 // 
 app.set('view engine', 'ejs');
+
+// app.get('/shop', function(req, res) {
+// 	let products;
+// 	connection.query("SELECT * FROM products ", function (err, result, fields) {
+// 	  if (err) {
+// 		throw err;
+// 	  } else {
+// 		console.log(result);
+// 		res.render('products', {title: 'Shop', products: result});
+// 	  }
+// 	});
+//   });
+
+
 
 // -------------------- ( login && register started ) -----------------------
 const path = require('path');
@@ -72,6 +91,10 @@ app.listen(5001, () => {
 })
 
 // -------------------- ( login && register ended ) -----------------------
+<<<<<<< HEAD
 
 
 
+=======
+ 
+>>>>>>> 6cf2fb8a7942b84865487d2bba9813f9bef9a95c
