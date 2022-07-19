@@ -100,7 +100,7 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
           };
         });
       }else{
-        res.render('order', { products: result , user : req.user , total : ""});
+        res.render('order', { products: result , user : req.user , total : tot});
       } 
     };
   });
