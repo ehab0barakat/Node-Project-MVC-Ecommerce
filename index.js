@@ -1,3 +1,4 @@
+
 const express= require("express")
 var app = express();
 var mysql = require('mysql');
@@ -34,17 +35,17 @@ app.get('/description', (req, res) => {
 
 app.listen(4000);
 
-app.get('/shop', function(req, res) {
-	let products;
-	connection.query("SELECT * FROM products ", function (err, result, fields) {
-	  if (err) {
-		throw err;
-	  } else {
-		console.log(result);
-		res.render('products', {title: 'Shop', products: result});
-	  }
-	});
-  });
+// app.get('/shop', function(req, res) {
+// 	let products;
+// 	connection.query("SELECT * FROM products ", function (err, result, fields) {
+// 	  if (err) {
+// 		throw err;
+// 	  } else {
+// 		console.log(result);
+// 		res.render('products', {title: 'Shop', products: result});
+// 	  }
+// 	});
+//   });
 
 
 
@@ -88,5 +89,4 @@ app.listen(5001, () => {
 })
 
 // -------------------- ( login && register ended ) -----------------------
-
-
+ 
