@@ -22,7 +22,7 @@
     <% products.forEach(function(result){ %>
     <div class="card m-5">
         <% if(title === 'Shop'){ %>
-      <img src="<%= result.image %>" class="card-img-top" alt="...">
+          <a href="/description/<%= result.ID %>"><img src="<%= result.image %>" class="card-img-top" alt="..."></a>
       <div class="card-body">
         <h5 class="card-title"><%= result.name %></h5>
         <% } else {%>
