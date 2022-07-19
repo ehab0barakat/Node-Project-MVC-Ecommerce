@@ -14,8 +14,8 @@ var db = mysql.createConnection({
 
 
 router.get('/', authController.isLoggedIn, (req, res) => {
-  // console.log(req.user);
 
+  // console.log(req.user);
   //  user1 = req.user[0] ? req.user[0] : req.user ; 
 
   res.redirect("/shop");
@@ -25,16 +25,25 @@ router.get('/', authController.isLoggedIn, (req, res) => {
 // -------------------------------------
 
 
-router.get('/register', (req, res) => {
-  
-  res.render('register', { message : "" , user: false });
+router.get('/register', authController.isLoggedIn, (req, res) => {
+  db.query('SELECT * FROM users WHERE email =?', [req.cookies.email], (error, result) => {
+    
+    req.user = result;
+
+    res.render('register', { message : "" , user: req.user});
+  });
 });
 
 
 // -------------------------------------
 
-router.get('/login', (req, res) => {
-  res.render('login' , { message : "" , user: false});
+router.get('/login', authController.isLoggedIn, (req, res) => {
+  // db.query('SELECT * FROM users WHERE email =?', [req.cookies.email], (error, result) => {
+    // console.log(result);
+    // req.user = result;
+    res.render('login' , { message : "" , user: req.user});
+    // res.render('register', { message : "" , user: req.user});
+  // });
 });
 
 
@@ -42,6 +51,8 @@ router.get('/login', (req, res) => {
 
 router.get('/profile', authController.isLoggedIn, (req, res) => {
   
+console.log( req.user[0] );
+
   if( req.user[0] ) {
 
     console.log(req.user[0]);
@@ -67,7 +78,7 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 });
 
 
-router.post('/search',function(req,res){
+router.post('/search', authController.isLoggedIn,function(req,res){
   var str = {
       stringPart:req.body.spearhead
   }
