@@ -3,11 +3,9 @@ const express = require("express")
 var app = express();
 var mysql = require('mysql');
 const cors = require('cors');
-const sellerRoute = require('./routes/seller')
 // 
 app.use(cors());
 app.use(express.json());
-app.use("/seller", sellerRoute)
 app.use(express.static("./static"))
 
 // 
@@ -32,28 +30,6 @@ connection.connect(function (error) {
 app.listen(4000);
 // 
 app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-	res.render("index");
-});
-
-// 
-app.get('/description', (req, res) => {
-	res.render("description");
-});
-
-// 
-app.get('/shop', function (req, res) {
-	let products;
-	connection.query("SELECT * FROM products ", function (err, result, fields) {
-		if (err) {
-			throw err;
-		} else {
-			// console.log(result);
-			res.render('products', { title: 'Shop', products: result });
-		}
-	});
-});
 
 // -------------------- ( login && register started ) -----------------------
 const path = require('path');
@@ -89,11 +65,13 @@ db.connect((error) => {
 //Define Routes
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
+app.use('/', require('./routes/seller'));
 
 app.listen(5001, () => {
 	console.log("Server started on Port 5001");
 })
 
 // -------------------- ( login && register ended ) -----------------------
+
 
 

@@ -13,17 +13,17 @@
 </head>
 
 <body>
-  <%- include('./include/header.ejs'); %>
+  <%- include('../include/header.ejs'); %>
 
 
   <form action="/seller/addproducts" method="post" name="form1">
     <div class="form-group">
       <label>ID</label>
-      <input type="text" class="form-control" name="id" id="id" value="<%= ID %>" placeholder="id">
+      <input type="text" class="form-control" name="id" id="id" value="<%= ID %>">
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Name</label>
-      <input type="text" class="form-control" name="name" id="name" value="" placeholder="Name">
+      <input type="text" class="form-control" name="name" id="name" value="<%= name %>">
     </div>
     <div class="form-group">
       <label>Price</label>

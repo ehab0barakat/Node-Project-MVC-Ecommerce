@@ -60,7 +60,4 @@
 //   })
 // });
 
-// router.get('/products', contSeller.listAllProducts);
-// router.post('/product', contSeller.createProduct)
-// router.put('/product', contSeller.updateProduct)
-// router.delete('/product', contSeller.deleteProduct)
+
