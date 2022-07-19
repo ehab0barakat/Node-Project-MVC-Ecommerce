@@ -82,13 +82,19 @@ exports.register = (req, res) => {
     })
 
     console.log("*****************");
-    console.log(isSeller);
+    if ( isSeller == "on" ) {
+      iseller = 1 
+    }else{ iseller = 0 
+    }
+    console.log(iseller)
+    // req.body.isSeller == "on" ? isSeller = 1 : isSeller = 0 ;
+
     console.log("*****************");
 
     let hashedPassword = await bcrypt.hash(password, 8);
     // console.log(hashedPassword);
     res.cookie('email', email );
-    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller }, (error, results) => {
+    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller :iseller }, (error, results) => {
       if(error) {
         console.log(error);
       } else {
