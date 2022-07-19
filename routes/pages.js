@@ -79,10 +79,19 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 
 // ------------------------------  ( add to cart ) ----------------------------------
 
-router.post('/search',function(req,res){
+router.post('/search', authController.isLoggedIn,function(req,res){
   var str = {
       stringPart:req.body.spearhead
   }
+  db.query('SELECT * FROM products WHERE products.name LIKE "%'+str.stringPart+'%"',function(err, result, fields) {
+    console.log(result);
+    if (err) {
+      throw err;
+	  } else {
+      res.render('products', {title: 'Shop', products: result , user : req.user });
+	  }
+  });
+});
 
 router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
     
@@ -94,13 +103,12 @@ router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
     db.query('INSERT INTO cart SET ?', { user_id: user_id , product_id: id}, (error, results) => {
        console.log(error);
     });
+   
+        res.redirect('/shop');
 
-    res.redirect('/shop');
-    
-    console.log(results);
   
 });
-});
+
 
 
 
@@ -119,7 +127,7 @@ router.get('/remove_product/:id', authController.isLoggedIn,function(req,res){
           } else {
             
               
-              res.redirect('/shop');
+              res.redirect('/cart');
   
           }
   
@@ -163,7 +171,9 @@ router.get('/checkout',authController.isLoggedIn,function(req,res){
 
       console.log(results);
     // var u_id=results[0].user_id;
+
     // var p_ids=`(${results[0].product_id},${results[1].product_id})`;
+    
     // console.log(p_ids);
     
     
@@ -171,19 +181,11 @@ router.get('/checkout',authController.isLoggedIn,function(req,res){
     }
       
 
-
+  });
 
   });
 
-  db.query('SELECT * FROM products WHERE products.name LIKE "%'+str.stringPart+'%"',function(err, result, fields) {
-    console.log(result);
-    if (err) {
-      throw err;
-	  } else {
-      res.render('products', {title: 'Shop', products: result , user : req.user });
-	  }
-  });
-});
+
 
 // ------------------------------  ( Order page ) ----------------------------------
 
