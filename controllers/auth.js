@@ -23,8 +23,9 @@ exports.login = async (req, res) => {
     }
 
     db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
-      // console.log(results);
-      if( !results || !(await bcrypt.compare(password, results[0].password)) ) {
+      console.log(results.length);
+      
+      if( !results || !(await bcrypt.compare(password, results[0].password )) ) {
         res.status(401).render('login', {
           message: 'Email or Password is incorrect'
         })
@@ -81,20 +82,20 @@ exports.register = (req, res) => {
 
     })
 
-    console.log("*****************");
+    // console.log("*****************");
     if ( isSeller == "on" ) {
-      iseller = 1 
+      var iseller = 1 
     }else{ iseller = 0 
     }
-    console.log(iseller)
+    // console.log(iseller)
     // req.body.isSeller == "on" ? isSeller = 1 : isSeller = 0 ;
 
-    console.log("*****************");
+    // console.log("*****************");
 
     let hashedPassword = await bcrypt.hash(password, 8);
     // console.log(hashedPassword);
     res.cookie('email', email );
-    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller :iseller }, (error, results) => {
+    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller : iseller }, (error, results) => {
       if(error) {
         console.log(error);
       } else {
@@ -114,19 +115,19 @@ exports.isLoggedIn = async (req, res, next) => {
 
   console.log("qwertyuiop");
   // console.log( req.user[0]);
-  console.log( req.cookies);
-  console.log( req.cookies.email);
-  console.log("qwertyuiop");
+  // console.log( req.cookies);
+  // console.log( req.cookies.email);
+  // console.log("qwertyuiop");
   if( req.cookies.jwt) {
     try {
-      console.log("1");
+      // console.log("1");
       //1) verify the token
       const decoded = await promisify(jwt.verify)(req.cookies.jwt,
         process.env.JWT_SECRET
         );
 
-        console.log(decoded);
-        console.log(decoded.id);
+        // console.log(decoded);
+        // console.log(decoded.id);
         
         //2) Check if the user still exists
         db.query('SELECT * FROM users WHERE email =?', [req.cookies.email], (error, result) => {
@@ -137,12 +138,12 @@ exports.isLoggedIn = async (req, res, next) => {
           }
           
           req.user = result;
-          console.log(req.user);
+          // console.log(req.user);
           return next();
 
         });
       } catch (error) {
-        console.log("2");
+        // console.log("2");
       console.log(error);
       return next();
     }
@@ -152,7 +153,7 @@ exports.isLoggedIn = async (req, res, next) => {
 }
 
 exports.logout = async (req, res) => {
-  res.clearCookie("email");
+  // res.clearCookie("email");
   res.cookie('jwt', 'logout', {
     expires: new Date(Date.now() + 2*1000),
     httpOnly: true
