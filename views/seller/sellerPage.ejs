@@ -32,19 +32,18 @@
 
       <div class="album py-5 bg-light ">
         <div class="container ">
-          <% seller.forEach(function(result){ %>
-
+            <% if(data.length){
+              for(var i = 0; i< data.length; i++) {%>
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 ">
             <div class="col card-group d-flex ">
               <div class="card shadow-sm">
-                <% if(title === 'seller'){ %>
-                <img class="img-fluid" src="<%= result.image %>" />
-                <h3 class="card-title m-2"><%= result.name %></h3>
+                <img class="img-fluid" src="<%= data[i].image%>" />
+                <h3 class="card-title m-2"><%= data[i].name%></h3>
 
 
                 <div class="card-body">
-                  <p class="card-text">Price: <%= result.price %></p>
-                  <p class="card-text"><%= result.description %></p>
+                  <p class="card-text">Price: <%= data[i].price%></p>
+                  <p class="card-text"><%= data[i].description%></p>
                   <div class="d-flex justify-content-center align-items-center">
                     <div class="btn-group ">
                       <button type="button" class="btn btn-sm btn-outline-secondary bg-success text-light">Edit  </button>

@@ -1,68 +1,126 @@
 const express = require('express')
-
-const fs = require('fs')
-var route = express.Router();
 const contSeller = require('../controllers/seller')
+var router = express.Router();
+var mysql = require('mysql');
+
+var Connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  port: '3306',
+  password: '',
+  database: 'node_project'
+});
 
 
-//Creating GET Router to fetch all the learner details from the MySQL Database
-app.get('/products' , (req, res) => {
-    mysqlConnection.query('SELECT * FROM products', (err, rows, fields) => {
-    if (!err)
-    res.send(rows);
-    else
-    console.log(err);
-    })
-    } );
-
-
-app.get('/product/:id' , (req, res) => {
-    mysqlConnection.query('SELECT * FROM products WHERE ID = ?',[req.params.id], (err, rows, fields) => {
-    if (!err)
-    res.send(rows);
-    else
-    console.log(err);
-    })
-    } );
-
-// ____________________________________
-
-route.post('/insert', (req, res) => {
-    let insert = "INSERT into products (ID,name,seller_id,price,image,description) values ('55','ProductNew','18','250','https://preview.colorlib.com/theme/amado/img/product-img/xproduct2.jpg.pagespeed.ic.JqJ-RgccAH.webp','..')";
-    database.query(insert, (err) => {
-        if (err) throw err;
-        res.send("insert succefully");
-    })
+// GET seller page.
+router.get('/seller', function (req, res, next) {
+  Connection.query('SELECT * FROM products', function (err, rows) {
+    if (err) {
+      req.flash('error', err);
+      res.render('sellerPage', { title: "sellerPage", data: '' });
+    } else {
+      res.render('sellerPage', { title: "sellerPage", data: rows });
+    }
+  });
 })
 
-// ____________________________________
 
-route.put('/Product/:id', (req, res) => {
-    let Query = "UPDATE products SET name = ? WHERE id=" + req.params.id;
-    database.query(Query, ["Product2"], (err, result) => {
-        if (err) throw err;
-        res.send("updated");
-    });
-});
+// ADD product 
+router.get('/addproducts', function (req, res, next) {
+  // render to views/user/add.ejs
+  res.render('seller/addproducts', {
+    title: 'Add New Products',
+    ID: '',
+    name: '',
+    seller_id: '',
+    price: '',
+    image: '',
+    description: '',
+  })
+})
 
-// ____________________________________
 
-route.delete('/Product/:id', (req, res) => {
-    let Query = "DELETE FROM products WHERE id = " + req.params.id;
-    database.query(Query, (err, result) => {
-        if (err) throw err;
-        res.send("deleted ");
-    });
-});
-
-//delete product
-app.delete('/product/:id', (req, res) => {
-    connection.query('delete from products where id=?', [req.params.id], (err, rows, fields) => {
-        if (!err)
-            res.send('product deleted successfully.')
-        else
-            res.send(err);
+//
+router.post('/addproducts', function (req, res, next) {
+    Connection.query('INSERT INTO products SET ?', product, function (err, result) {
+      if (err) {
+        req.flash('error', err)
+        // render to views/user/add.ejs
+        res.render('seller/addproducts', {
+          title: 'Add New product',
+          ID: product.id,
+          name: product.name,
+          seller_id: seller.id,
+          price: product.price,
+          image: product.image,
+          description: product.description
+          
+        })
+      } else {
+        req.flash('success', 'Data added successfully!');
+        res.redirect('/sellerPage');
+      }
     })
-});
+  })
 
-module.exports = route
+// EDIT product FORM
+router.get('/editproduct/(:id)', function (req, res, next) {
+  Connection.query('SELECT * FROM products WHERE id = ' + req.params.id, function (err, rows, fields) {
+    if (err) throw err
+    if (rows.length <= 0) {
+      req.flash('error', 'products not found with id = ' + req.params.id)
+      res.redirect('/sellerPage')
+    }
+    else {
+      res.render('seller/editproduct', {
+        title: 'Edit product',
+        id: rows[0].id,
+        name: rows[0].name,
+        seller_id: rows[0].seller_id,
+        price: rows[0].price,
+        image: rows[0].image,
+        description: rows[0].description
+      })
+    }
+  })
+})
+// EDIT product
+router.post('/updateproduct/:id', function (req, res, next) {
+    Connection.query('UPDATE products SET ? WHERE id = ' + req.params.id, product, function (err, result) {
+      if (err) {
+        req.flash('error', err)
+        // render to views/user/add.ejs
+        res.render('seller/editproduct', {
+          title: 'Edit product',
+          ID: product.id,
+          name: product.name,
+          seller_id: seller.id,
+          price: product.price,
+          image: product.image,
+          description: product.description
+        })
+      } else {
+        req.flash('success', 'Data updated successfully!');
+        res.redirect('/sellerPage');
+      }
+    })
+  })
+
+// DELETE product
+router.get('/deleteproduct/(:id)', function (req, res, next) {
+  var product = { id: req.params.id }
+  Connection.query('DELETE FROM products WHERE id = ' + req.params.id, product, function (err, result) {
+    //if(err) throw err
+    if (err) {
+      req.flash('error', err)
+      // redirect to users list page
+      res.redirect('/sellerPage')
+    } else {
+      req.flash('success', 'product deleted successfully! id = ' + req.params.id)
+      // redirect to users list page
+      res.redirect('/sellerPage')
+    }
+  })
+})
+
+module.exports = router;
