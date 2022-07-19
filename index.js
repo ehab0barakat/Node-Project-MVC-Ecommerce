@@ -43,7 +43,7 @@ app.get('/shop', function(req, res) {
 	  if (err) {
 		throw err;
 	  } else {
-		// console.log(result);
+		console.log(result);
 		res.render('products', {title: 'Shop', products: result});
 	  }
 	});
