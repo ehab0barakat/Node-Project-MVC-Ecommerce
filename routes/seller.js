@@ -2,7 +2,7 @@ const express = require('express')
 
 const fs = require('fs')
 var route = express.Router();
-const contSeller = require('../controller/seller')
+const contSeller = require('../controllers/seller')
 
 
 // ____________________________________
