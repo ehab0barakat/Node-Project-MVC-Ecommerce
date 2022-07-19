@@ -23,8 +23,9 @@ exports.login = async (req, res) => {
     }
 
     db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
-      // console.log(results);
-      if( !results || !(await bcrypt.compare(password, results[0].password)) ) {
+      console.log(results.length);
+      
+      if( !results) {
         res.status(401).render('login', {
           message: 'Email or Password is incorrect'
         })
@@ -58,7 +59,7 @@ exports.login = async (req, res) => {
 }
 
 exports.register = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { name, email, password, passwordConfirm , isSeller } = req.body;
 
@@ -77,31 +78,26 @@ exports.register = (req, res) => {
       });
     }
 
-    db.query('INSERT INTO cart SET ?', { user_id: 1 , product_id: 1}, (error, results) => {
 
-    })
-
-    console.log("*****************");
+    // console.log("*****************");
     if ( isSeller == "on" ) {
-      iseller = 1 
+      var iseller = 1 
     }else{ iseller = 0 
     }
-    console.log(iseller)
+    // console.log(iseller)
     // req.body.isSeller == "on" ? isSeller = 1 : isSeller = 0 ;
 
-    console.log("*****************");
+    // console.log("*****************");
 
     let hashedPassword = await bcrypt.hash(password, 8);
     // console.log(hashedPassword);
     res.cookie('email', email );
-    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller :iseller }, (error, results) => {
+    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller : iseller }, (error, results) => {
       if(error) {
         console.log(error);
       } else {
         console.log(results);
-        return res.render('register', {
-          message: 'User registered'
-        });
+        return res.redirect('/login');
       }
     })
 
@@ -112,21 +108,21 @@ exports.register = (req, res) => {
 
 exports.isLoggedIn = async (req, res, next) => {
 
-  console.log("qwertyuiop");
+  // console.log("qwertyuiop");
   // console.log( req.user[0]);
-  console.log( req.cookies);
-  console.log( req.cookies.email);
-  console.log("qwertyuiop");
+  // console.log( req.cookies);
+  // console.log( req.cookies.email);
+  // console.log("qwertyuiop");
   if( req.cookies.jwt) {
     try {
-      console.log("1");
+      // console.log("1");
       //1) verify the token
       const decoded = await promisify(jwt.verify)(req.cookies.jwt,
         process.env.JWT_SECRET
         );
 
-        console.log(decoded);
-        console.log(decoded.id);
+        // console.log(decoded);
+        // console.log(decoded.id);
         
         //2) Check if the user still exists
         db.query('SELECT * FROM users WHERE email =?', [req.cookies.email], (error, result) => {
@@ -142,7 +138,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
         });
       } catch (error) {
-        console.log("2");
+        // console.log("2");
       console.log(error);
       return next();
     }
