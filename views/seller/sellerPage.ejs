@@ -16,6 +16,18 @@
 
     <main>
 
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">seller Name</h1>
+            
+              <a href="/" class="btn btn-secondary ml-3">Home</a>
+              <a href="../addproducts" class="btn btn-success ml-3">Add Product</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div class="album py-5 bg-light ">
         <div class="container ">
           <% products.forEach(function(result){ %>
@@ -35,10 +47,9 @@
                     </p>
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="btn-group ">
-                        <button type="button" class="btn btn-sm btn-outline-secondary bg-success text-light">Edit
-                        </button>
-                        <button type="button"
-                          class="btn btn-sm btn-outline-secondary bg-danger text-light ">Delete</button>
+                        <a class="btn btn-success edit" href="../editproduct/<%= result.ID %>">Edit</a>
+                        <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
+                          href="../deleteproduct/<%= result.ID %>">Delete</a>
                       </div>
                     </div>
                   </div>

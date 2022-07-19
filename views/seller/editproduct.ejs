@@ -16,7 +16,7 @@
     <%- include('../include/header.ejs'); %>
 
 
-    <form action="/seller/updateproduct/<%= id %>" method="post" name="form1">
+    <form action="/seller/updateproduct/<%= ID %>" method="post" name="form1">
         <div class="form-group">
             <label>ID</label>
             <input type="text" class="form-control" name="id" id="id" value="<%= ID %>" placeholder="id">
@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <label>Image</label>
-            <input type="email" class="form-control" name="image" id="image" aria-describedby="image"
+            <input type="text" class="form-control" name="image" id="image" aria-describedby="image"
                 value="<%= image %>">
         </div>
         <div class="form-group">

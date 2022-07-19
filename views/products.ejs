@@ -1,39 +1,46 @@
-  <%- include('./include/header.ejs'); %>
+<%- include('./include/header.ejs'); %>
 
   <div class="jumbotron text-center">
     <h1>Products</h1>
   </div>
-    
 
-    <h2>Products list</h2>
+
+  <h2>Products list</h2>
 
   <div class="card-group">
     <% products.forEach(function(result){ %>
-    <div class="card m-5">
-        <% if(title === 'Shop'){ %>
-      <img src="<%= result.image %>" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title"><%= result.name %></h5>
-        <% } else {%>
-            <img class="img-fluid" src="<%= result.image %>" />
-            <h4 class="card-title"><%= product.title %></h4>
-          <% } %>
-        <p class="card-text">Price: ₹<%= result.price %></p>
-        <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary><i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</a>
-         <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
-           <input type="hidden"  name="prd_id" value="<%= result.ID %>">
-          <!-- <input type="hidden"  name="image" value="<%= result.image%>">
+      <div class="card m-5">
+        <% if(title==='Shop' ){ %>
+          <img src="<%= result.image %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= result.name %>
+            </h5>
+            <% } else {%>
+              <img class="img-fluid" src="<%= result.image %>" />
+              <h4 class="card-title">
+                <%= product.title %>
+              </h4>
+              <% } %>
+                <p class="card-text">Price: <%= result.price %>
+                </p>
+                <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary>
+                 <i class=" fa fa-cart-plus" aria-hidden="true"></i> Add to cart
+                </a>
+                <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
+                <input type="hidden" name="prd_id" value="<%= result.ID %>">
+                <!-- <input type="hidden"  name="image" value="<%= result.image%>">
           <input type="hidden"  name="name" value="<%= result.name %>">
           <input type="hidden"  name="price" value="<%= result.price %>"
            <input type="submit" value=" Add to cart" class="btn btn-primary">     -->
 
-          <!-- <button class="btn btn-primary" type="submit"> <i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</button> -->
+                <!-- <button class="btn btn-primary" type="submit"> <i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</button> -->
 
-        
-        </form>
-    </div>
-    </div>
-    <% }); %>
+
+                </form>
+          </div>
+      </div>
+      <% }); %>
 
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,5 +48,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <script src="../index.js"></script>
 
-</body>
-</html>
+  </body>
+
+  </html>
