@@ -65,9 +65,7 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
 // ------------------------------  ( shop ) ----------------------------------
 
 router.get('/shop',  authController.isLoggedIn , function(req, res) {
-  console.log("9999999")
   console.log(req.user);
-  console.log("9999999")
   db.query("SELECT * FROM products ", function (err, result, fields) {
     if (err) {
       throw err;
