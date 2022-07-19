@@ -49,6 +49,13 @@ app.get('/description', (req, res) => {
 
 
 
+app.post('/cart',function(req,res){
+  
+    var sql='SELECT FROM products on  '
+
+
+
+})
 
 app.get('/add_to_cart/:id', function (req, res){
     
