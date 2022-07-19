@@ -34,17 +34,7 @@ app.get('/description', (req, res) => {
 
 app.listen(4000);
 
-app.get('/shop', function(req, res) {
-	let products;
-	connection.query("SELECT * FROM products ", function (err, result, fields) {
-	  if (err) {
-		throw err;
-	  } else {
-		// console.log(result);
-		res.render('products', {title: 'Shop', products: result});
-	  }
-	});
-  });
+
 
 
 // -------------------- ( login && register started ) -----------------------
@@ -69,8 +59,6 @@ app.use(express.urlencoded({ extended: false }));
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 app.use(cookieParser());
-
-app.set('view engine', 'hbs');
 
 db.connect( (error) => {
   if(error) {

@@ -58,9 +58,9 @@ exports.login = async (req, res) => {
 }
 
 exports.register = (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
 
-  const { name, email, password, passwordConfirm } = req.body;
+  const { name, email, password, passwordConfirm , isSeller } = req.body;
 
   db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
     if(error) {
@@ -77,11 +77,18 @@ exports.register = (req, res) => {
       });
     }
 
+    db.query('INSERT INTO cart SET ?', { user_id: 1 , product_id: 1}, (error, results) => {
+
+    })
+
+    console.log("*****************");
+    console.log(isSeller);
+    console.log("*****************");
 
     let hashedPassword = await bcrypt.hash(password, 8);
     // console.log(hashedPassword);
     res.cookie('email', email );
-    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword }, (error, results) => {
+    db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword , isSeller }, (error, results) => {
       if(error) {
         console.log(error);
       } else {
