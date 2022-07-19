@@ -7,7 +7,7 @@ const cors = require('cors');
 var db = mysql.createConnection({
 	host:'localhost',
 	user:'root',
-    port:'3306',
+  port:'3306',
 	password:'',
 	database:'node_project'
 });
@@ -27,9 +27,7 @@ router.get('/', authController.isLoggedIn, (req, res) => {
 
 router.get('/register', authController.isLoggedIn, (req, res) => {
   db.query('SELECT * FROM users WHERE email =?', [req.cookies.email], (error, result) => {
-    
     req.user = result;
-
     res.render('register', { message : "" , user: req.user});
   });
 });
@@ -67,6 +65,9 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
 // ------------------------------  ( shop ) ----------------------------------
 
 router.get('/shop',  authController.isLoggedIn , function(req, res) {
+  console.log("9999999")
+  console.log(req.user);
+  console.log("9999999")
   db.query("SELECT * FROM products ", function (err, result, fields) {
     if (err) {
       throw err;
@@ -78,6 +79,10 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 
 // ------------------------------  ( add to cart ) ----------------------------------
 
+router.post('/search',function(req,res){
+  var str = {
+      stringPart:req.body.spearhead
+  }
 
 router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
     
@@ -97,6 +102,7 @@ router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
         
         // console.log(results);
   
+});
 });
 
 
@@ -172,6 +178,14 @@ router.get('/checkout',authController.isLoggedIn,function(req,res){
 
   });
 
+  db.query('SELECT * FROM products WHERE products.name LIKE "%'+str.stringPart+'%"',function(err, result, fields) {
+    console.log(result);
+    if (err) {
+      throw err;
+	  } else {
+      res.render('products', {title: 'Shop', products: result , user : req.user });
+	  }
+  });
 });
 
 // ------------------------------  ( Order page ) ----------------------------------
