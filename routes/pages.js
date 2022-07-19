@@ -78,6 +78,7 @@ router.get('/shop', authController.isLoggedIn, function (req, res) {
 });
 // ------------------------------  ( seller ) ----------------------------------
 
+// ------------------------------------------------------------------------------------
 
 router.get('/seller', authController.isLoggedIn, function (req, res) {
   db.query("SELECT * FROM products ", function (err, result, fields) {
@@ -104,12 +105,10 @@ router.get('/addproducts', function (req, res, next) {
   })
 })
 
-
 //
 router.post('/addproducts', function (req, res, next) {
   db.query('INSERT INTO products SET ?', product, function (err, result) {
     if (err) {
-      req.flash('error', err)
       res.render('seller/addproducts', {
         title: 'Add New product',
         ID: product.id,
@@ -122,11 +121,12 @@ router.post('/addproducts', function (req, res, next) {
 
       })
     } else {
-      req.flash('success', 'Data added successfully!');
-      res.redirect('/sellerPage');
+      res.redirect('seller/sellerPage');
     }
   })
-})
+});
+
+
 
 // EDIT product FORM
 router.get('/editproduct/:id', function (req, res, next) {

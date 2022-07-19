@@ -22,14 +22,20 @@
 
 // // ____________________________________
 
-// route.post('/insert', (req, res) => {
+// route.post('/addproducts', (req, res) => {
 //   let insert = "INSERT into products (ID,name,seller_id,price,image,description) values ('55','ProductNew','18','250','https://preview.colorlib.com/theme/amado/img/product-img/xproduct2.jpg.pagespeed.ic.JqJ-RgccAH.webp','..')";
 //   database.query(insert, (err) => {
 //       if (err) throw err;
 //       res.send("insert succefully");
 //   })
 // })
-
+// router.post('/addproducts', (req, res) => {
+//     let insert = "INSERT into products (ID,name,seller_id,price,image,description) values ('55','ProductNew','18','250','https://preview.colorlib.com/theme/amado/img/product-img/xproduct2.jpg.pagespeed.ic.JqJ-RgccAH.webp','..')";
+//     db.query(insert, (err) => {
+//       if (err) throw err;
+//       res.redirect('seller/sellerPage');
+//     })
+//   })
 // // ____________________________________
 
 // route.put('/Product/:id', (req, res) => {
