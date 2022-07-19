@@ -163,24 +163,30 @@ router.get('/cart', authController.isLoggedIn,function(req,res){
 router.get('/checkout',authController.isLoggedIn,function(req,res){
 
   var id=req.user[0].ID;
-  var sql = "SELECT cart.user_id, cart.product_id  FROM cart WHERE cart.user_id =?";
+  var sql = "SELECT  cart.product_id  FROM cart WHERE cart.user_id =?";
   db.query(sql,[id], function(err, results, fields) {
     if (err){
         throw err;
     } else {
+      var list = "" ;
+      for (const prod in results) {
+        if( results.length - 1  ==  prod   ){
+          list += results[prod].product_id
+        }else{
+          list += results[prod].product_id + ","
+        }
+      }
+      var target_list  = `(${list})` ;
 
-      console.log(results);
-    // var u_id=results[0].user_id;
 
-    // var p_ids=`(${results[0].product_id},${results[1].product_id})`;
-    
-    // console.log(p_ids);
-    
-    
-    // // res.render('order', { userID : u_id ,});
+    db.query('INSERT INTO ordered SET ?', { user_id: id , product_ids: target_list}, (error, results) => {
+      if (err){
+        throw err;
+    } else {
+      res.redirect("/order");
     }
-      
-
+   });
+    }
   });
 
   });
@@ -190,10 +196,12 @@ router.get('/checkout',authController.isLoggedIn,function(req,res){
 // ------------------------------  ( Order page ) ----------------------------------
 
 router.get('/order',  authController.isLoggedIn , function(req, res) {
-  db.query("SELECT product_ids  FROM users , ordered where ordered.user_id = users.ID and email = ? GROUP by created_date", [req.cookies.email] , function (err, result, fields) {
+  db.query("SELECT product_ids  FROM users , ordered where ordered.user_id = users.ID and email = ? GROUP by created_date desc", [req.cookies.email] , function (err, result, fields) {
 	  if (err) {
 		throw err;
 	  } else {
+      // console.log(result[0].product_ids);
+
       if (result.length != 0){
         db.query(`SELECT * from products where id in ${result[0].product_ids}`, function (err, result, fields) {
           if (err) {
@@ -207,6 +215,10 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
           };
         });
       }else{
+        var tot = 0 ;
+        for (const prod of result) {
+          tot += prod.price
+        }
         res.render('order', { products: result , user : req.user , total : tot});
       } 
     };
