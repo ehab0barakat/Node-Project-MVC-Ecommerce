@@ -26,11 +26,6 @@ connection.connect(function(error){
 
 app.set('view engine', 'ejs');
 
-app.get('/description', (req, res) => {
-
-	
-    res.render("description");
-});
 
 
 app.listen(4000);
