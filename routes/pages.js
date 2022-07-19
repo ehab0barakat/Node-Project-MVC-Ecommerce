@@ -66,6 +66,71 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 	});
 });
 
+// ------------------------------  ( add to cart ) ----------------------------------
+
+
+router.get('/add_to_cart/:id', function (req, res){
+    
+    // console.log(res);
+   var id =req.params.id;
+    // var sql = 'SELECT * FROM products WHERE ID = id';
+    db.query('INSERT INTO cart SET ?', { user_id: 1 , product_id: id}, (error, results) => {
+       console.log(error);
+    
+    });
+    
+          
+            
+        res.redirect('/shop');
+        
+        // console.log(results);
+  
+});
+
+
+
+// ------------------------------  ( remove from cart ) ----------------------------------
+
+router.get('/remove_product/:id',function(req,res){
+     
+  //  var proId=req.params.id;
+  
+        var id =req.params.id;
+      var sql = 'DELETE FROM cart WHERE product_id = ?';
+  
+      db.query(sql,[id], function(err, results, fields) {
+          if (err){
+              throw err;
+          } else {
+            
+              
+              res.redirect('/shop');
+  
+          }
+  
+        });
+      });
+
+// ------------------------------  ( cart products ) ----------------------------------
+
+router.get('/cart',function(req,res){
+  
+   
+  var sql = "SELECT products.ID, products.name , products.image, products.price  FROM products RIGHT JOIN cart ON products.ID = Product_id";
+  // var sql='SELECT title, ID ,image ,price  FROM products  JOIN cart ON ID =product_id ORDER BY title'
+      // console.log(sql);
+  db.query(sql, function(err, results, fields) {
+        if (err){
+            throw err;
+        } else {
+          //  console.log(results);
+            
+        res.render('cart', {title: 'cart', products: results});
+        
+        }
+      });
+
+});
 
 
 

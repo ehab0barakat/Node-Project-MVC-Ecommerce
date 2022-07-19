@@ -1,21 +1,19 @@
 {
   "dependencies": {
-<<<<<<< HEAD
+
     "body-parser": "^1.20.0",
-=======
+
     "bcryptjs": "^2.4.3",
->>>>>>> bf74f7606b4f0e19654d09314f7d455b6ca9add5
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
-<<<<<<< HEAD
+
     "express-session": "^1.17.3",
-=======
+
     "hbs": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
->>>>>>> bf74f7606b4f0e19654d09314f7d455b6ca9add5
     "login": "^0.8.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.19",
