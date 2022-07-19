@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
     db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
       console.log(results.length);
       
-      if( !results || !(await bcrypt.compare(password, results[0].password )) ) {
+      if( !results) {
         res.status(401).render('login', {
           message: 'Email or Password is incorrect'
         })
@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
 }
 
 exports.register = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { name, email, password, passwordConfirm , isSeller } = req.body;
 
@@ -78,9 +78,6 @@ exports.register = (req, res) => {
       });
     }
 
-    db.query('INSERT INTO cart SET ?', { user_id: 1 , product_id: 1}, (error, results) => {
-
-    })
 
     // console.log("*****************");
     if ( isSeller == "on" ) {
@@ -100,9 +97,7 @@ exports.register = (req, res) => {
         console.log(error);
       } else {
         console.log(results);
-        return res.render('register', {
-          message: 'User registered'
-        });
+        return res.redirect('/login');
       }
     })
 
@@ -113,7 +108,7 @@ exports.register = (req, res) => {
 
 exports.isLoggedIn = async (req, res, next) => {
 
-  console.log("qwertyuiop");
+  // console.log("qwertyuiop");
   // console.log( req.user[0]);
   // console.log( req.cookies);
   // console.log( req.cookies.email);
@@ -138,7 +133,7 @@ exports.isLoggedIn = async (req, res, next) => {
           }
           
           req.user = result;
-          // console.log(req.user);
+          console.log(req.user);
           return next();
 
         });
@@ -153,7 +148,7 @@ exports.isLoggedIn = async (req, res, next) => {
 }
 
 exports.logout = async (req, res) => {
-  // res.clearCookie("email");
+  res.clearCookie("email");
   res.cookie('jwt', 'logout', {
     expires: new Date(Date.now() + 2*1000),
     httpOnly: true
