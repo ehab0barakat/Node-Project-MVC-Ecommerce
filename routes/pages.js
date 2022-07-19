@@ -67,7 +67,20 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 });
 
 
+router.post('/search',function(req,res){
+  var str = {
+      stringPart:req.body.spearhead
+  }
 
+  db.query('SELECT * FROM products WHERE products.name LIKE "%'+str.stringPart+'%"',function(err, result, fields) {
+    console.log(result);
+    if (err) {
+      throw err;
+	  } else {
+      res.render('products', {title: 'Shop', products: result , user : req.user });
+	  }
+  });
+});
 
 // ------------------------------  ( Order page ) ----------------------------------
 
