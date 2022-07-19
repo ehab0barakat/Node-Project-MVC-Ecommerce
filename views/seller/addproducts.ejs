@@ -15,8 +15,10 @@
 <body>
   <%- include('../include/header.ejs'); %>
 
+<div class="container">
+  
 
-  <form action="/seller/addproducts" method="post" name="form1">
+  <form action="/seller/addproducts" class="px-5" method="post" name="form1">
     <div class="form-group">
       <label>ID</label>
       <input type="text" class="form-control" name="id" id="id" value="<%= ID %>">
@@ -46,6 +48,9 @@
 
     <input type="submit" class="btn btn-primary" value="Add">
   </form>
+</div>
+
+
 </body>
 
 </html>

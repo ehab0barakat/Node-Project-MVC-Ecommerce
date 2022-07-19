@@ -9,27 +9,20 @@
 
   <div class="card-group">
     <% products.forEach(function(result){ %>
-      <div class="card m-5">
-        <% if(title==='Shop' ){ %>
-          <img src="<%= result.image %>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= result.name %>
-            </h5>
-            <% } else {%>
-              <img class="img-fluid" src="<%= result.image %>" />
-              <h4 class="card-title">
-                <%= product.title %>
-              </h4>
-              <% } %>
-                <p class="card-text">Price: <%= result.price %>
-                </p>
-                <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary>
-                 <i class=" fa fa-cart-plus" aria-hidden="true"></i> Add to cart
-                </a>
-                <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
-                <input type="hidden" name="prd_id" value="<%= result.ID %>">
-                <!-- <input type="hidden"  name="image" value="<%= result.image%>">
+    <div class="card m-5">
+        <% if(title === 'Shop'){ %>
+          <a href="/description/<%= result.ID %>"><img src="<%= result.image %>" class="card-img-top" alt="..."></a>
+      <div class="card-body">
+        <h5 class="card-title"><%= result.name %></h5>
+        <% } else {%>
+            <img class="img-fluid" src="<%= result.image %>" />
+            <h4 class="card-title"><%= product.title %></h4>
+          <% } %>
+        <p class="card-text">Price: ₹<%= result.price %></p>
+        <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary><i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</a>
+         <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
+           <input type="hidden"  name="prd_id" value="<%= result.ID %>">
+          <!-- <input type="hidden"  name="image" value="<%= result.image%>">
           <input type="hidden"  name="name" value="<%= result.name %>">
           <input type="hidden"  name="price" value="<%= result.price %>"
            <input type="submit" value=" Add to cart" class="btn btn-primary">     -->
