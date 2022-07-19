@@ -21,6 +21,7 @@ var connection = mysql.createConnection({
 	password:'',
 	database:'node_project'
 });
+
 connection.connect(function(error){
 	if(!!error) {
 		console.log(error);
@@ -28,16 +29,12 @@ connection.connect(function(error){
 		console.log('Database Connected Successfully');
 	}
 });
+
 app.listen(4000);
 // 
 app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-    // connection.query('select * from users', (err, rows) => {
-    //     if (!err)
-    //         res.send(rows);
-    //     else
-    //         console.log(err);
-    // })
     res.render("index");
 });
 
@@ -59,11 +56,7 @@ app.get('/shop', function(req, res) {
 	});
   });
 
-app.listen(4000);
-
-
 //   
-
 
 app.get('/seller', function (req, res) {
     let seller;
@@ -75,6 +68,8 @@ app.get('/seller', function (req, res) {
         }
     });
 });
+
+
 // -------------------- ( login && register started ) -----------------------
 const path = require('path');
 const dotenv = require('dotenv');
