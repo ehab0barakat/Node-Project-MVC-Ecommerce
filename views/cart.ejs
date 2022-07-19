@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/style.css">
   <title>Document</title>
 </head>
+<%- include('./include/header.ejs'); %>
   <div class="container mt-5 ">
     <div class="row  ">
    
@@ -20,7 +21,6 @@
                    <th>Image</th>
                    <th>Product</th>
                    <th>Price</th>
-                   <th>Total</th>
                    <th>Remove</th>
    
                </tr>
@@ -29,23 +29,19 @@
                 
                     
                         <% products.forEach(function(results) { %>
+                            
                             <tr>
-                                <% var Total =0 %>
+                                
                             <td><%= results.ID %></td>
                             <td><img src="<%= results.image %>" width="50px" height="50px"  ></td> 
                             <td><%= results.name %> </td>
                             <td><%= results.price %> </td>
-                            <td><%= Total+results.price %></td>
                            
 
                             <td>
                                  <a class="btn btn-danger" href="/remove_product/<%= results.ID %>" class="card-link"> Delete</a>
                               
-                                
-                                <!-- <form action="/remove_product" method="post">
-                                    <input type="hidden" value="<%= results.ID %>" name="id">
-                                    <button class="btn  btn-danger " type="submit"> Delete</button>
-                                </form> -->
+                    
                             </td>
                             <% }) %>
                             
@@ -59,14 +55,16 @@
 
 
        </div>
-
-       <div class="card col-sm-6 d-flex x-5 " style="width: 18rem;">
+       
+       
+       <div class="card col-sm-6 mt-5 " style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">CART TOTALS</h5>
-          <p class="card-text">Total : $</p>
+          <p class="card-text">Total :<%= total %> $</p>
 
-          <a href="#" class="btn btn-primary">PROCEED TO CHECKOUT </a>
+          <a href="/checkout" class="btn btn-primary">PROCEED TO CHECKOUT </a>
         </div>
+       
       </div> 
     </div>
    

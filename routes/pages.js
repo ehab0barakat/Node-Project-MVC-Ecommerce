@@ -51,11 +51,11 @@ router.get('/login', authController.isLoggedIn, (req, res) => {
 
 router.get('/profile', authController.isLoggedIn, (req, res) => {
   
-console.log( req.user[0] );
+// console.log( req.user[0] );
 
   if( req.user[0] ) {
 
-    console.log(req.user[0]);
+    // console.log(req.user[0]);
     
     res.render('profile', { user : req.user[0] });
   } else {
@@ -80,12 +80,14 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 // ------------------------------  ( add to cart ) ----------------------------------
 
 
-router.get('/add_to_cart/:id', function (req, res){
+router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
     
     // console.log(res);
    var id =req.params.id;
+   var user_id=req.user[0].ID
+
     // var sql = 'SELECT * FROM products WHERE ID = id';
-    db.query('INSERT INTO cart SET ?', { user_id: 1 , product_id: id}, (error, results) => {
+    db.query('INSERT INTO cart SET ?', { user_id: user_id , product_id: id}, (error, results) => {
        console.log(error);
     
     });
@@ -102,7 +104,7 @@ router.get('/add_to_cart/:id', function (req, res){
 
 // ------------------------------  ( remove from cart ) ----------------------------------
 
-router.get('/remove_product/:id',function(req,res){
+router.get('/remove_product/:id', authController.isLoggedIn,function(req,res){
      
   //  var proId=req.params.id;
   
@@ -124,26 +126,54 @@ router.get('/remove_product/:id',function(req,res){
 
 // ------------------------------  ( cart products ) ----------------------------------
 
-router.get('/cart',function(req,res){
+router.get('/cart', authController.isLoggedIn,function(req,res){
+  var id=req.user[0].ID;
   
-   
-  var sql = "SELECT products.ID, products.name , products.image, products.price  FROM products RIGHT JOIN cart ON products.ID = Product_id";
-  // var sql='SELECT title, ID ,image ,price  FROM products  JOIN cart ON ID =product_id ORDER BY title'
-      // console.log(sql);
-  db.query(sql, function(err, results, fields) {
+    // console.log(req.user[0].ID);
+  var sql = "SELECT products.ID, products.name , products.image, products.price  FROM products RIGHT JOIN cart ON products.ID = Product_id   WHERE cart.user_id =?";
+  
+  db.query(sql,[id], function(err, results, fields) {
         if (err){
             throw err;
         } else {
           //  console.log(results);
+          let totalPrice = 0 ;
+          for (const prod of results) {
+            totalPrice+= prod.price
+          }
             
-        res.render('cart', {title: 'cart', products: results});
+        res.render('cart', {title: 'cart', user : req.user,products: results,total:totalPrice});
         
         }
       });
 
 });
+// ------------------------------  ( check out ) ----------------------------------
+
+router.get('/checkout',authController.isLoggedIn,function(req,res){
+
+  var id=req.user[0].ID;
+  var sql = "SELECT cart.user_id, cart.product_id  FROM cart WHERE cart.user_id =?";
+  db.query(sql,[id], function(err, results, fields) {
+    if (err){
+        throw err;
+    } else {
+
+      console.log(results);
+    // var u_id=results[0].user_id;
+    // var p_ids=`(${results[0].product_id},${results[1].product_id})`;
+    // console.log(p_ids);
+    
+    
+    // // res.render('order', { userID : u_id ,});
+    }
+      
 
 
+
+  });
+
+});
 
 // ------------------------------  ( Order page ) ----------------------------------
 
@@ -152,7 +182,7 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
 	  if (err) {
 		throw err;
 	  } else {
-      console.log(result);
+      // console.log(result);
       db.query(`SELECT * from products where id in ${result[0].product_ids}`, function (err, result, fields) {
         if (err) {
         throw err;
