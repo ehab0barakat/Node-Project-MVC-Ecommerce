@@ -1,8 +1,8 @@
 
-    <%- include('../include/header.ejs'); %>
+    <%- include('./include/header.ejs'); %>
 
 
-    <form action="/seller/updateproduct/<%= ID %>" method="post" name="form1">
+    <form action="/updateproduct/<%= ID %>" method="post" name="form1">
         <div class="form-group">
             <label>ID</label>
             <input type="text" class="form-control" name="id" id="id" value="<%= ID %>" placeholder="id">

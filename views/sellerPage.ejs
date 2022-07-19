@@ -1,4 +1,4 @@
-<%- include('../include/header.ejs'); %>
+<%- include('./include/header.ejs'); %>
     <main>
 
       <div class="card text-center">
@@ -34,9 +34,9 @@
                     </p>
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="btn-group ">
-                        <a class="btn btn-success edit" href="../editproduct/<%= result.ID %>">Edit</a>
+                        <a class="btn btn-success edit" href="/editproduct/<%= result.ID %>">Edit</a>
                         <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
-                          href="../deleteproduct/<%= result.ID %>">Delete</a>
+                          href="/deleteproduct/<%= result.ID %>">Delete</a>
                       </div>
                     </div>
                   </div>

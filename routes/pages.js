@@ -66,6 +66,8 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
 router.get('/description/:id',  authController.isLoggedIn , function(req, res) {
     
 
+
+  
   var id =req.params.id;
   var sql = 'SELECT *  FROM products WHERE ID = ?';
 
@@ -91,15 +93,18 @@ router.get('/shop', authController.isLoggedIn, function (req, res) {
     }
   });
 });
+
+
+
 // ------------------------------  ( seller ) ----------------------------------
 
-
 router.get('/seller', authController.isLoggedIn, function (req, res) {
+
   db.query("SELECT * FROM products ", function (err, result, fields) {
     if (err) {
       throw err;
     } else {
-      res.render('seller/sellerPage', { title: 'sellerPage', products: result, user: req.user });
+      res.render('sellerPage', { title: 'sellerPage', products: result, user: req.user });
     }
   });
 });
@@ -107,7 +112,7 @@ router.get('/seller', authController.isLoggedIn, function (req, res) {
 
 // ADD product 
 router.get('/addproducts',authController.isLoggedIn, function (req, res, next) {
-  res.render('seller/addproducts', {
+  res.render('addproducts', {
     title: 'Add New Products',
     ID: '',
     name: '',
@@ -121,7 +126,7 @@ router.get('/addproducts',authController.isLoggedIn, function (req, res, next) {
 
 
 //
-router.post('/addproducts',authController.isLoggedIn, function (req, res, next) {
+router.post('addproducts',authController.isLoggedIn, function (req, res, next) {
 
 console.log("ehba")
   
@@ -139,21 +144,24 @@ db.query('INSERT INTO products SET ?', product, function (err, result) {
         user: req.user
 
       })
+      res.redirect('/seller');
     } else {
       // req.flash('success', 'Data added successfully!');
-      res.redirect('/sellerPage');
+      res.redirect('/seller');
     }
   })
 })
 
 // EDIT product FORM
 router.get('/editproduct/:id',authController.isLoggedIn, function (req, res, next) {
+  
   db.query('SELECT * FROM products WHERE id = ' + req.params.id, function (err, rows, fields) {
     if (err) {
       throw err
     }
     else {
-      res.render('seller/editproduct', {
+
+      res.render('editproduct', {
         title: 'Edit product',
         ID: rows[0].ID,
         name: rows[0].name,
@@ -170,7 +178,7 @@ router.get('/editproduct/:id',authController.isLoggedIn, function (req, res, nex
 router.post('/updateproduct/:id',authController.isLoggedIn, function (req, res, next) {
   db.query('UPDATE products SET ? WHERE id = ' + req.params.id, product, function (err, result) {
     if (err) {
-      res.render('seller/editproduct', {
+      res.render('editproduct', {
         title: 'Edit product',
         ID: product.id,
         name: product.name,
@@ -180,7 +188,7 @@ router.post('/updateproduct/:id',authController.isLoggedIn, function (req, res, 
         description: product.description, user: req.user
       })
     } else {
-      res.redirect('/seller/sellerPage');
+      res.redirect('sellerPage');
     }
   })
 });
@@ -188,15 +196,17 @@ router.post('/updateproduct/:id',authController.isLoggedIn, function (req, res, 
 
 // DELETE product
 router.get('/deleteproduct/(:id)',authController.isLoggedIn, function (req, res, next) {
-  var product = { id: req.params.id }
-  db.query('DELETE FROM products WHERE id = ' + req.params.id, product, function (err, result) {
-    if (err) {
-      req.flash('error', err)
-      res.redirect('/sellerPage')
-    } else {
-      // req.flash('success', 'product deleted successfully! id = ' + req.params.id)
-      res.redirect('seller/sellerPage')
-    }
+
+  console.log( req.params.id );
+  
+  db.query(' delete FROM products WHERE ID = ?' , [+req.params.id], function (err, result) {
+    
+      if (err) {
+        throw err;
+      } else {
+    console.log( result );
+    // res.redirect('/seller')
+  }
   })
 });
 
@@ -206,6 +216,8 @@ router.post('/search', authController.isLoggedIn,function(req,res){
   var str = {
     stringPart: req.body.spearhead
   }
+
+
   db.query('SELECT * FROM products WHERE products.name LIKE "%'+str.stringPart+'%"',function(err, result, fields) {
     console.log(result);
     if (err) {
