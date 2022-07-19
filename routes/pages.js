@@ -51,7 +51,7 @@ router.get('/login', authController.isLoggedIn, (req, res) => {
 
 router.get('/profile', authController.isLoggedIn, (req, res) => {
   
-console.log( req.user[0] );
+// console.log( req.user[0] );
 
   if( req.user[0] ) {
 
@@ -63,7 +63,6 @@ console.log( req.user[0] );
   }
   
 });
-
 
 // ------------------------------  ( shop ) ----------------------------------
 
@@ -77,8 +76,103 @@ router.get('/shop',  authController.isLoggedIn , function(req, res) {
 	});
 });
 
+// ------------------------------  ( add to cart ) ----------------------------------
 
 
+router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
+    
+    // console.log(res);
+   var id =req.params.id;
+   var user_id=req.user[0].ID
+
+    // var sql = 'SELECT * FROM products WHERE ID = id';
+    db.query('INSERT INTO cart SET ?', { user_id: user_id , product_id: id}, (error, results) => {
+       console.log(error);
+    
+    });
+    
+          
+            
+        res.redirect('/shop');
+        
+        // console.log(results);
+  
+});
+
+
+
+// ------------------------------  ( remove from cart ) ----------------------------------
+
+router.get('/remove_product/:id', authController.isLoggedIn,function(req,res){
+     
+  //  var proId=req.params.id;
+  
+        var id =req.params.id;
+      var sql = 'DELETE FROM cart WHERE product_id = ?';
+  
+      db.query(sql,[id], function(err, results, fields) {
+          if (err){
+              throw err;
+          } else {
+            
+              
+              res.redirect('/shop');
+  
+          }
+  
+        });
+      });
+
+// ------------------------------  ( cart products ) ----------------------------------
+
+router.get('/cart', authController.isLoggedIn,function(req,res){
+  var id=req.user[0].ID;
+  
+    // console.log(req.user[0].ID);
+  var sql = "SELECT products.ID, products.name , products.image, products.price  FROM products RIGHT JOIN cart ON products.ID = Product_id   WHERE cart.user_id =?";
+  
+  db.query(sql,[id], function(err, results, fields) {
+        if (err){
+            throw err;
+        } else {
+          //  console.log(results);
+          let totalPrice = 0 ;
+          for (const prod of results) {
+            totalPrice+= prod.price
+          }
+            
+        res.render('cart', {title: 'cart', user : req.user,products: results,total:totalPrice});
+        
+        }
+      });
+
+});
+// ------------------------------  ( check out ) ----------------------------------
+
+router.get('/checkout',authController.isLoggedIn,function(req,res){
+
+  var id=req.user[0].ID;
+  var sql = "SELECT cart.user_id, cart.product_id  FROM cart WHERE cart.user_id =?";
+  db.query(sql,[id], function(err, results, fields) {
+    if (err){
+        throw err;
+    } else {
+
+      console.log(results);
+    // var u_id=results[0].user_id;
+    // var p_ids=`(${results[0].product_id},${results[1].product_id})`;
+    // console.log(p_ids);
+    
+    
+    // // res.render('order', { userID : u_id ,});
+    }
+      
+
+
+
+  });
+
+});
 
 // ------------------------------  ( Order page ) ----------------------------------
 
