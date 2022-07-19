@@ -76,6 +76,7 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
 	  if (err) {
 		throw err;
 	  } else {
+      console.log(result);
       db.query(`SELECT * from products where id in ${result[0].product_ids}`, function (err, result, fields) {
         if (err) {
         throw err;
@@ -97,14 +98,21 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
 // ------------------------------  ( thanks page ) ----------------------------------
 
 router.get('/thankyou',  authController.isLoggedIn , function(req, res) {
-
-      res.render('thankyou', { user : req.user });
-	  
+  
+  db.query(`select ID from users WHERE email =?`, [req.cookies.email] , function (err, result, fields) {
+    if (err) {
+    throw err;
+    } else {
+      db.query(`DELETE FROM cart WHERE user_id =?`, [result[0].ID] , function (err, result, fields) {
+        if (err) {
+          throw err;
+        } else {
+          res.render('thankyou', { user : req.user });
+        }
+      });
+    }
+  });
 });
-
-
-
-
 
 
 module.exports = router;
