@@ -55,7 +55,7 @@ console.log( req.user[0] );
 
   if( req.user[0] ) {
 
-    console.log(req.user[0]);
+    // console.log(req.user[0]);
     
     res.render('profile', { user : req.user[0] });
   } else {
@@ -87,20 +87,21 @@ router.get('/order',  authController.isLoggedIn , function(req, res) {
 	  if (err) {
 		throw err;
 	  } else {
-      console.log(result);
-      db.query(`SELECT * from products where id in ${result[0].product_ids}`, function (err, result, fields) {
-        if (err) {
-        throw err;
-        } else {
-          var tot = 0 ;
-          for (const prod of result) {
-            tot += prod.price
-          }
-  
-          res.render('order', { products: result , user : req.user , total : tot});
-        
-        };
-      });
+      if (result.length != 0){
+        db.query(`SELECT * from products where id in ${result[0].product_ids}`, function (err, result, fields) {
+          if (err) {
+          throw err;
+          } else {
+            var tot = 0 ;
+            for (const prod of result) {
+              tot += prod.price
+            }
+            res.render('order', { products: result , user : req.user , total : tot});
+          };
+        });
+      }else{
+        res.render('order', { products: result , user : req.user , total : ""});
+      } 
     };
   });
 });
