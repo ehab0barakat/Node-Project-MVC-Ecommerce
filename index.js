@@ -1,12 +1,18 @@
 const express= require("express")
+
 var app = express();
+const fs=require('fs')
 var mysql = require('mysql');
 const cors = require('cors');
-
-var route = express.Router();
-
-app.use(express.json());
+const sellerRoute=require('./routes/seller')
+// 
 app.use(cors());
+app.use(express.json());
+app.use("/seller",sellerRoute)
+app.use(express.static("./static"))
+
+// 
+var route = express.Router();
 
 var connection = mysql.createConnection({
 	host:'localhost',
@@ -22,7 +28,8 @@ connection.connect(function(error){
 		console.log('Database Connected Successfully');
 	}
 });
-
+app.listen(4000);
+// 
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     // connection.query('select * from users', (err, rows) => {
@@ -33,15 +40,13 @@ app.get('/', (req, res) => {
     // })
     res.render("index");
 });
-app.get('/description', (req, res) => {
 
-	
+// 
+app.get('/description', (req, res) => {
     res.render("description");
 });
 
-
-app.listen(4000);
-
+// 
 app.get('/shop', function(req, res) {
 	let products;
 	connection.query("SELECT * FROM products ", function (err, result, fields) {
@@ -54,7 +59,16 @@ app.get('/shop', function(req, res) {
 	});
   });
 
+//   
 
 
-
-
+app.get('/seller', function (req, res) {
+    let seller;
+    connection.query("SELECT * FROM products ", function (err, result, fields) {
+        if (err) {
+            throw err;
+        } else {
+            res.render('seller', { title: 'seller', seller: result });
+        }
+    });
+});
