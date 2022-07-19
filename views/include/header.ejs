@@ -32,29 +32,39 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link " href="/shop">Shop</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="/cart">Cart</a>
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="/order">Checkout</a>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/logout">Logout</a>
-            </li>
-
-            <% } else { %>
+            <% if( user[0].isSeller==1 ) { %>
               <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/seller">MY Products</a>
               </li>
               <% } %>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/logout">Logout</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="/order">Checkout</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/logout">Logout</a>
+                </li>
+
+                <% } else { %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                  </li>
+                  <% } %>
         </ul>
       </div>
 

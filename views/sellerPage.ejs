@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('./include/header.ejs'); %>
+    <main>
 
 <head>
   <meta charset="UTF-8">
@@ -27,26 +27,29 @@
 
     </div>
 
-
-    <div class="album py-5 bg-light ">
-      <div class="container ">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 ">
-          <% products.forEach(function(result){ %>
-            <div class="col card-group d-flex ">
-              <div class="card shadow-sm">
-                <img class="img-fluid" src="<%= result.image %>" />
-                <h3 class="card-title m-2">
-                  <%= result.name %>
-                </h3>
-                <div class="card-body">
-                  <p class="card-text">
-                    Price: <%= result.price %>
-                  </p>
-                  <div class="d-flex justify-content-center align-items-center">
-                    <div class="btn-group ">
-                      <a class="btn btn-success edit" href="../editproduct/<%= result.ID %>">Edit</a>
-                      <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
-                        href="../deleteproduct/<%= result.ID %>">Delete</a>
+      <div class="album py-5 bg-light ">
+        <div class="container ">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 ">
+            <% products.forEach(function(result){ %>
+              <div class="col card-group d-flex ">
+                <div class="card shadow-sm">
+                  <img class="img-fluid" src="<%= result.image %>" />
+                  <h3 class="card-title m-2">
+                    <%= result.name %>
+                  </h3>
+                  <div class="card-body">
+                    <p class="card-text">
+                      Price: <%= result.price %>
+                    </p>
+                    <p class="card-text">
+                      <%= result.description %>
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="btn-group ">
+                        <a class="btn btn-success edit" href="/editproduct/<%= result.ID %>">Edit</a>
+                        <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
+                          href="/deleteproduct/<%= result.ID %>">Delete</a>
+                      </div>
                     </div>
                   </div>
                 </div>

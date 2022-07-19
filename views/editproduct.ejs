@@ -1,9 +1,9 @@
 
-    <%- include('../include/header.ejs'); %>
+    <%- include('./include/header.ejs'); %>
 
     <div class="container">
 
-    <form action="/seller/updateproduct/<%= ID %>" method="post" name="form1">
+    <form action="/updateproduct/<%= ID %>" method="post" name="form1">
         <div class="form-group">
             <label >Name</label>
             <input type="text" class="form-control" name="name" id="name" value="<%= name %>">
