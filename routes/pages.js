@@ -7,7 +7,7 @@ const cors = require('cors');
 var db = mysql.createConnection({
 	host:'localhost',
 	user:'root',
-  port:'3306',
+  port:'3307',
 	password:'',
 	database:'node_project'
 });
@@ -60,6 +60,25 @@ router.get('/profile', authController.isLoggedIn, (req, res) => {
     res.redirect('/login');
   }
   
+});
+
+//----------------------(description)---------------
+router.get('/description/:id',  authController.isLoggedIn , function(req, res) {
+    
+
+  var id =req.params.id;
+  var sql = 'SELECT *  FROM products WHERE ID = ?';
+
+  db.query(sql,[id], function(err, result, fields) {
+      if (err){
+          throw err;
+      } else {
+        
+          console.log(result);
+        res.render('description', {title: 'description', products: result , user : req.user });
+
+      }
+  });
 });
 
 // ------------------------------  ( shop ) ----------------------------------

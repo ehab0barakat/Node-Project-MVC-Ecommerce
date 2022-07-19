@@ -12,7 +12,7 @@ app.use(cors());
 var connection = mysql.createConnection({
 	host:'localhost',
 	user:'root',
-    port:'3306',
+    port:'3307',
 	password:'',
 	database:'node_project'
 });
@@ -26,11 +26,6 @@ connection.connect(function(error){
 
 app.set('view engine', 'ejs');
 
-app.get('/description', (req, res) => {
-
-	
-    res.render("description");
-});
 
 
 app.listen(4000);
