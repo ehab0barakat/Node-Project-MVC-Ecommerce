@@ -93,14 +93,11 @@ router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res){
     // var sql = 'SELECT * FROM products WHERE ID = id';
     db.query('INSERT INTO cart SET ?', { user_id: user_id , product_id: id}, (error, results) => {
        console.log(error);
-    
     });
+
+    res.redirect('/shop');
     
-          
-            
-        res.redirect('/shop');
-        
-        // console.log(results);
+    console.log(results);
   
 });
 });
