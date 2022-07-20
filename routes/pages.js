@@ -99,10 +99,6 @@ router.get('/shop', authController.isLoggedIn, function (req, res) {
 // ------------------------------  ( seller ) ----------------------------------
 
 router.get('/seller', authController.isLoggedIn, function (req, res) {
-
-    console.log("wwwwwwwwww")
-    console.log(req.user)
-    console.log("wwwwwwwwww")
   db.query("SELECT * FROM products where seller_id =? " ,[req.user[0].ID] , function (err, result, fields) {
     if (err) {
       throw err;
@@ -129,13 +125,17 @@ router.get('/addproducts',authController.isLoggedIn, function (req, res, next) {
 
 
 //
-router.post('addproducts',authController.isLoggedIn, function (req, res, next) {
+router.post('/addproducts',authController.isLoggedIn, function (req, res, next) {
 
+var name = req.body.name
+var price = req.body.price
+var description = req.bodydescriptione
+var image = req.body.image
 console.log("ehba")
   
-db.query('INSERT INTO products SET ?', product, function (err, result) {
+db.query('INSERT INTO products SET ?', {name : name , price : price, description : description, image : image , seller_id : req.user[0].ID }, function (err, result) {
     if (err) {
-      req.flash('error', err)
+      // req.flash('error', err)
       res.render('seller/addproducts', {
         title: 'Add New product',
         ID: product.id,
@@ -177,10 +177,15 @@ router.get('/editproduct/:id',authController.isLoggedIn, function (req, res, nex
   })
 });
 
-// EDIT product
+// UPdate product
 router.post('/updateproduct/:id',authController.isLoggedIn, function (req, res, next) {
-  db.query('UPDATE products SET ? WHERE id = ' + req.params.id, product, function (err, result) {
+var form = req.body ;
+var id = req.params.id ;
+console.log(id);
+
+  db.query(`UPDATE products SET name='${form.name}',price='${form.price}',image='${form.image}',description='${form.description}' WHERE ID= ${id} `, function (err, result) {
     if (err) {
+      throw err;
       res.render('editproduct', {
         title: 'Edit product',
         ID: product.id,
@@ -191,7 +196,7 @@ router.post('/updateproduct/:id',authController.isLoggedIn, function (req, res, 
         description: product.description, user: req.user
       })
     } else {
-      res.redirect('sellerPage');
+      res.redirect('/seller');
     }
   })
 });
@@ -231,19 +236,23 @@ router.post('/search', authController.isLoggedIn,function(req,res){
   });
 });
 
-  router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res) {
 
-    // console.log(res);
-    var id = req.params.id;
-    var user_id = req.user[0].ID
 
-    // var sql = 'SELECT * FROM products WHERE ID = id';
-    db.query('INSERT INTO cart SET ?', { user_id: user_id, product_id: id }, (error, results) => {
-      console.log(error);
 
-    });
-    res.redirect('/shop');
+
+router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res) {
+
+  // console.log(res);
+  var id = req.params.id;
+  var user_id = req.user[0].ID
+
+  // var sql = 'SELECT * FROM products WHERE ID = id';
+  db.query('INSERT INTO cart SET ?', { user_id: user_id, product_id: id }, (error, results) => {
+    console.log(error);
+
   });
+  res.redirect('/shop');
+});
 
 
 
