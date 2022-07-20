@@ -16,7 +16,7 @@
        <p class="card-text">Price: ₹<%= result.price %></p>
        <p class="card-text">Price: ₹<%= result.description%></p>
        
-       <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary><i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</a>
+       <a href="/add_to_desc/<%= result.ID %>" class=" btn-primary><i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</a>
         <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
           <input type="hidden"  name="prd_id" value="<%= result.ID %>">
          <!-- <input type="hidden"  name="image" value="<%= result.image%>">
