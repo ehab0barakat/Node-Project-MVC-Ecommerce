@@ -2,41 +2,38 @@
 
 <%- include('./include/header.ejs'); %>
 
+  <div class="container">
+    <h2 style="padding: 10px; text-align: center;">Products Details</h2>
 
-   <h2 style="padding: 10px;">Products Details</h2>
+    <div class="card-group">
+      <% products.forEach(function(result){ %>
+        <div style="text-align: center;">
 
- <div class="card-group">
-   <% products.forEach(function(result){ %>
-   <div style="height:150px ;width:600px;">
-    
-         <a href="/description/<%= result.ID %>"><img src="<%= result.image %>" class="card-img-top" alt="..."></a>
-     <div class="card-body">
-       <h5 class="card-title"><%= result.name %></h5>
-      
-       <p class="card-text">Price: ₹<%= result.price %></p>
-       <p class="card-text">Price: ₹<%= result.description%></p>
-       
-       <a href="/add_to_desc/<%= result.ID %>" class=" btn-primary><i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</a>
-        <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
-          <input type="hidden"  name="prd_id" value="<%= result.ID %>">
-         <!-- <input type="hidden"  name="image" value="<%= result.image%>">
-         <input type="hidden"  name="name" value="<%= result.name %>">
-         <input type="hidden"  name="price" value="<%= result.price %>"
-          <input type="submit" value=" Add to cart" class="btn btn-primary">     -->
+          <a href="/description/<%= result.ID %>"><img src="<%= result.image %>" class="card-img-top" alt="..."></a>
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= result.name %>
+            </h5>
 
-         <!-- <button class="btn btn-primary" type="submit"> <i class="fa fa-cart-plus" aria-hidden="true" ></i> Add to cart</button> -->
+            <p class="card-text">
+              Price: <%= result.price %>
+            </p>
+            <p class="card-text">
+              <%= result.description%>
+            </p>
 
-       
-       </form>
-   </div>
-   </div>
-   <% }); %>
+            <a href="/add_to_cart/<%= result.ID %>" class=" btn-primary><i class=" fa fa-cart-plus"
+              aria-hidden="true"></i> Add to cart</a>
+            <!-- <form action="/cart/<%= result.ID %>"  method="post"> -->
+            <input type="hidden" name="prd_id" value="<%= result.ID %>">
+            </form>
+          </div>
+        </div>
+        <% }); %>
+    </div>
 
- </div>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
- <script src="../index.js"></script>
-
-</body>
-</html>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="../index.js"></script>
