@@ -3,6 +3,8 @@ const authController = require('../controllers/auth');
 const router = express.Router();
 var mysql = require('mysql');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
+
 
 var db = mysql.createConnection({
   host: 'localhost',
@@ -208,6 +210,41 @@ router.get('/deleteproduct/(:id)',authController.isLoggedIn, function (req, res,
     // res.redirect('/seller')
   }
   })
+});
+
+// -----------------------user operations-----------------------
+router.get('/edit/:id',authController.isLoggedIn , function(req, res) {
+    
+  var id =req.params.id;
+  var sql = 'SELECT *  FROM users WHERE ID = ?';
+
+  db.query(sql,[id], function(err, result, fields) {
+      if (err){
+          throw err;
+      } else {
+        
+          // console.log(result);
+        res.render('updateprofile', {title: 'description', products: result , user : req.user });
+
+      }
+    });
+  });
+router.post('/edit/:id',authController.isLoggedIn ,async function(req, res) {
+;
+   var id =req.params.id;
+   var form = req.body;
+   let hashedPassword = await bcrypt.hash(form.password, 8);
+   console.log(form);
+  var sql = `UPDATE users SET name='${form.name}',email='${form.email}',password='${hashedPassword }' WHERE ID= ${+id} `;
+ 
+        db.query(sql, function(err, result, fields) {
+          if (err){
+              throw err;
+          } else {
+
+            res.render('profile', { user : req.user });
+  }
+});
 });
 
 // ------------------------------  ( add to cart ) ----------------------------------
