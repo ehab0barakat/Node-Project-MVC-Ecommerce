@@ -223,6 +223,11 @@ router.get('/deleteproduct/(:id)',authController.isLoggedIn, function (req, res,
 // -----------------------user operations-----------------------
 router.get('/edit/:id',authController.isLoggedIn , function(req, res) {
     
+  console.log( "req.user");
+  console.log( req.user);
+  console.log( "req.user");
+  
+  
   var id =req.params.id;
   var sql = 'SELECT *  FROM users WHERE ID = ?';
 
