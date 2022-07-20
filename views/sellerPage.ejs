@@ -1,12 +1,25 @@
-<%- include('./include/header.ejs'); %>
-    <main>
+   
+   
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+  </head>
+
+   <main>
 
       <div class="card text-center">
         <div class="card-header">
           <h1 class="fw-light">Seller Page</h1>
         </div>
         <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
+          <div class="avatar-ctn text-center">
+            <img src="/avatar.png" class="avatar" alt="user profile picture"/>
+          </div>
+          <h5 class="card-title"> <%= user[0].name %></h5>
           <br>
           <a href="/" class="btn btn-secondary ml-3">Home</a>
           <a href="../addproducts" class="btn btn-success ml-3">Add Product</a>

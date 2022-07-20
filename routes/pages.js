@@ -215,7 +215,7 @@ router.get('/deleteproduct/(:id)',authController.isLoggedIn, function (req, res,
         throw err;
       } else {
     console.log( result );
-    // res.redirect('/seller')
+    res.redirect('/seller')
   }
   })
 });
