@@ -51,13 +51,13 @@ router.get('/login', authController.isLoggedIn, (req, res) => {
 
 router.get('/profile', authController.isLoggedIn, (req, res) => {
 
-  // console.log( req.user[0] );
+  console.log( req.user[0] );
 
   if (req.user[0]) {
 
     // console.log(req.user[0]);
 
-    res.render('profile', { user: req.user[0] });
+    res.render('profile', { user: req.user });
   } else {
     res.redirect('/login');
   }
@@ -251,7 +251,7 @@ router.post('/edit/:id',authController.isLoggedIn ,async function(req, res) {
               throw err;
           } else {
 
-            res.render('profile', { user : req.user });
+            res.redirect("/profile");
   }
 });
 });
@@ -284,12 +284,36 @@ router.get('/add_to_cart/:id', authController.isLoggedIn, function (req, res) {
   var id = req.params.id;
   var user_id = req.user[0].ID
 
-  // var sql = 'SELECT * FROM products WHERE ID = id';
-  db.query('INSERT INTO cart SET ?', { user_id: user_id, product_id: id }, (error, results) => {
-    console.log(error);
-
+  db.query(`select * from cart where product_id=${id} ` ,(error, results) => {
+    if(results.length == 0) {
+      db.query('INSERT INTO cart SET ?', { user_id: user_id, product_id: id }, (error, results) => {
+        console.log(error);
+      });
+      };
   });
   res.redirect('/shop');
+  // var sql = 'SELECT * FROM products WHERE ID = id';
+});
+
+
+
+
+router.get('/add_to_desc/:id', authController.isLoggedIn, function (req, res) {
+
+  // console.log(res);
+  var id = req.params.id;
+  var user_id = req.user[0].ID
+
+  db.query(`select * from cart where product_id=${id} ` ,(error, results) => {
+    if(results.length == 0) {
+      db.query('INSERT INTO cart SET ?', { user_id: user_id, product_id: id }, (error, results) => {
+        console.log(error);
+      });
+    };
+  });
+  // var sql = 'SELECT * FROM products WHERE ID = id';
+
+  res.redirect(`/description/${id}`);
 });
 
 
