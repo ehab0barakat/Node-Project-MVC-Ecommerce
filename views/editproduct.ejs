@@ -3,10 +3,11 @@
 
 
     <form action="/updateproduct/<%= ID %>" method="post" name="form1">
-        <div class="form-group">
-            <label>ID</label>
-            <input type="text" class="form-control" name="id" id="id" value="<%= ID %>" placeholder="id">
-        </div>
+
+<div class="container">
+
+
+
         <div class="form-group">
             <label>Name</label>
             <input type="text" class="form-control" name="name" id="name" value="<%= name %>" placeholder="Name">
@@ -21,11 +22,7 @@
             <input type="text" class="form-control" name="image" id="image" aria-describedby="image"
                 value="<%= image %>">
         </div>
-        <div class="form-group">
-            <label>Seller ID</label>
-            <input type="seller_id" class="form-control" name="seller_id" id="seller_id" aria-describedby="seller_id"
-                value="<%= seller_id %>">
-        </div>
+
         <div class="form-group">
             <label>Description</label>
             <input type="description" class="form-control" name="description" id="description"
@@ -33,6 +30,8 @@
         </div>
         <button type="submit" class="btn btn-info">Update</button>
     </form>
+
+</div>
 </body>
 
 </html>
