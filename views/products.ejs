@@ -5,11 +5,13 @@
   </div>
     
 
-    <h2>Products list</h2>
+    <h2 class="m-5">Products list</h2>
 
-  <div class="card-group">
-    <% products.forEach(function(result){ %>
-    <div class="card m-5">
+  <div class="card-group m-3">
+    
+      <div class="row row-col-3">
+        <% products.forEach(function(result){ %>
+    <div class="card m-5 col-2">
         <% if(title === 'Shop'){ %>
           <a href="/description/<%= result.ID %>"><img src="<%= result.image %>" class="card-img-top" alt="..."></a>
       <div class="card-body">
