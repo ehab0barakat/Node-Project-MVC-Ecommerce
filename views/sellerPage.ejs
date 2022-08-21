@@ -1,0 +1,72 @@
+   
+   
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+  </head>
+
+   <main>
+
+      <div class="card text-center">
+        <div class="card-header">
+          <h1 class="fw-light">Seller Page</h1>
+        </div>
+        <div class="card-body">
+          <div class="avatar-ctn text-center">
+            <img src="/avatar.png" class="avatar" alt="user profile picture"/>
+          </div>
+          <h5 class="card-title"> <%= user[0].name %></h5>
+          <br>
+          <a href="/" class="btn btn-secondary ml-3">Home</a>
+          <a href="../addproducts" class="btn btn-success ml-3">Add Product</a>
+        </div>
+        
+      </div>
+
+
+      <div class="album py-5 bg-light ">
+        <div class="container ">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 ">
+            <% products.forEach(function(result){ %>
+              <div class="col card-group d-flex ">
+                <div class="card shadow-sm">
+                  <img class="img-fluid" src="<%= result.image %>" />
+                  <h3 class="card-title m-2">
+                    <%= result.name %>
+                  </h3>
+                  <div class="card-body">
+                    <p class="card-text">
+                      Price: <%= result.price %>
+                    </p>
+                    <p class="card-text">
+                      <%= result.description %>
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="btn-group ">
+                        <a class="btn btn-success edit" href="/editproduct/<%= result.ID %>">Edit</a>
+                        <a class="btn btn-danger delete" onclick="return alert('Are You sure?')"
+                          href="/deleteproduct/<%= result.ID %>">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="../index.js"></script>
+
+</body>
+
+</html>

@@ -6,13 +6,12 @@
     <div class="row">
       <div class="col-4">
         <div class="card">
-          <div class="avatar-ctn">
-            <img class='m-3' style="width: 100px; height:100px;" src="https://i.pinimg.com/736x/d6/a0/1f/d6a01f07a283fdf690f29edbdef7c458.jpg" class="avatar" alt="user profile picture">
+          <div class="avatar-ctn text-center">
+            <img src="/avatar.png" class="avatar" alt="user profile picture"/>
           </div>
           <div class="card-body">
-            <h5 class="card-title">  <%= user.name %> <h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary"> <%= user.email %></a>
+            <h5 class="card-title text-center">  <%= user[0].name %> <h5>
+            <a href="#" class="btn btn-primary text-center"> <%= user[0].email %></a>
           </div>
         </div>
       </div>
@@ -23,10 +22,10 @@
             Profile Page
           </div>
           <div class="card-body">
-            <h5 class="card-title">Hey <%= user.name %> welcome back</h5>
+            <h5 class="card-title">Hey <%= user[0].name %> welcome back</h5>
             <p class="card-text">This is your profile page where you can add all the information about yourself</p>
             <form id='editProfile', action='/profile/' + customer.ID  method='GET')>
-            <a href="/edit/<%= user.ID %>" class="btn btn-primary">Edit</a>
+            <a href="/edit/<%= user[0].ID %>" class="btn btn-primary">Edit</a>
             </form>
           </div>
           <div class="card-footer text-muted">
